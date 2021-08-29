@@ -1,15 +1,15 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const { USER_NAME } = require('./');
 
-// const username = process.env.USER_NAME;
-// const password = process.env.USER_PASSWORD;
-// const dbname = process.env.DB_NAME;
-const username = 'mike-jr';
-const password = 'test123';
-const dbname = 'Mike-DB';
+const username = process.env.DATABASE_USERNAME;
+const password = process.env.DATABASE_PASSWORD;
+const dbname = process.env.DATABASE_NAME;
+// const username = 'mike-jr';
+// const password = 'test123';
+// const dbname = 'Mike-DB';
 
-const PORT = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
 const blogRoutes = require('./routes/blogRoute');
 
@@ -24,7 +24,7 @@ mongoose
 	.then((result) => {
 		console.log('connected to DB');
 		//listen for request
-		app.listen(PORT);
+		app.listen(port);
 	})
 	.catch((err) => {
 		console.log(err);

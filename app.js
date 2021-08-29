@@ -1,5 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const { USER_NAME } = require('./');
+
+// const username = process.env.USER_NAME;
+// const password = process.env.USER_PASSWORD;
+// const dbname = process.env.DB_NAME;
+const username = 'mike-jr';
+const password = 'test123';
+const dbname = 'Mike-DB';
 
 const PORT = process.env.PORT || 3000;
 
@@ -9,7 +17,7 @@ const blogRoutes = require('./routes/blogRoute');
 const app = express();
 
 //connect to MongoDB
-const dbURI = 'mongodb+srv://mike-jr:Lucifer1234@cluster0.qfxbp.mongodb.net/Mike-DB?retryWrites=true&w=majority';
+const dbURI = `mongodb+srv://${username}:${password}@cluster0.qfxbp.mongodb.net/${dbname}`;
 
 mongoose
 	.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })

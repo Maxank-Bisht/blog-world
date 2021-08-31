@@ -28,11 +28,15 @@ nav {
 nav ul {
 	display: flex;
 	justify-content: space-between;
-	align-items: flex-end;
+	align-items: center;
 }
 nav li {
+	background-color: rgb(204, 204, 204);
+	padding: 1rem;
+	margin: 0 5px;
 	list-style-type: none;
 	margin-left: 20px;
+	border-radius: 5rem;
 }
 nav h1 {
 	font-size: 3em;
@@ -59,10 +63,14 @@ h3 {
 }
 /* index styles */
 .blogs div {
+	background-color: rgb(209, 208, 208);
 	display: block;
-	margin: 40px 0;
+	margin: 20px 0;
+	padding: 20px 0;
 	padding-left: 30px;
-	border-left: 6px solid crimson;
+	box-sizing: content-box;
+	border-left: 7px solid crimson;
+	border-radius: 1rem;
 }
 
 .blogs a:hover h3 {
@@ -71,15 +79,19 @@ h3 {
 /* details styles */
 .details {
 	position: relative;
+	background-color: rgb(187, 186, 186);
+	padding: 1.5rem 2.3rem;
+	border-radius: 2rem;
 }
 .delete {
 	position: absolute;
-	top: 0;
-	right: 0;
+	top: 1rem;
+	right: 1rem;
 	border-radius: 50%;
 	padding: 8px;
 }
 .delete:hover {
+	background-color: rgba(255, 0, 0, 0.418);
 	cursor: pointer;
 	box-shadow: 1px 2px 3px rgba(0, 0, 0, 0.2);
 }

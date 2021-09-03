@@ -1,11 +1,20 @@
 <nav>
 	<div class="site-title">
 		<a href="/"><h1>Blog Ninjas</h1></a>
-		<p>A Mayank Site</p>
+		<p>A New Place For Bloggers</p>
 	</div>
 	<ul>
+		<% if (user) { %>
+		<li>Welcome, <%= user.email %></li>
+		<li><a href="/blogs/create">New Blogs</a></li>
 		<li><a href="/">Blogs</a></li>
 		<li><a href="/about">About</a></li>
-		<li><a href="/blogs/create">New Blogs</a></li>
+		<li><a href="/logout" class="btn">Log Out</a></li>
+		<% } else{%>
+		<li><a href="/">Blogs</a></li>
+		<li><a href="/about">About</a></li>
+		<li><a href="/login">Log In</a></li>
+		<li><a href="/signup" class="btn">Sign Up</a></li>
+		<% } %>
 	</ul>
 </nav>

@@ -4,7 +4,12 @@ const blog_index = (req, res) => {
 	Blog.find()
 		.sort({ createdAt: -1 })
 		.then((result) => {
-			res.render('blogs/index', { title: 'All Blogs', blogs: result });
+			res.render('blogs/index', {
+				title: 'All Blogs',
+				heading: 'All Blogs',
+				blogs: result,
+				img_url: '/assets/img/home-bg.jpg',
+			});
 		})
 		.catch((err) => console.log(err));
 };
@@ -13,9 +18,20 @@ const blog_details = (req, res) => {
 	const id = req.params.id;
 	Blog.findById(id)
 		.then((result) => {
-			res.render('blogs/details', { blog: result, title: 'Blog Details' });
+			res.render('blogs/details', {
+				blog: result,
+				title: 'Blog Details',
+				img_url: '/assets/img/singleBlog.jpg',
+				heading: result.title,
+			});
 		})
-		.catch((err) => res.status(404).render('404', { title: 'Blog Not Found!!' }));
+		.catch((err) =>
+			res.status(404).render('404', {
+				title: 'Blog Not Found!!',
+				heading: 'Page Not Found!',
+				img_url: '/assets/img/post-sample-image.jpg',
+			})
+		);
 };
 
 const blog_create_get = (req, res) => {

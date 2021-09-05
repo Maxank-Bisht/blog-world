@@ -5,17 +5,31 @@
 	<body>
 		<%- include('../partials/nav.ejs') %>
 
-		<div class="create-blog content">
-			<form action="/blogs" method="POST">
-				<label for="title">Blog title:</label>
-				<input type="text" id="title" name="title" required />
-				<label for="snippet">Blog snippet:</label>
-				<input type="text" id="snippet" name="snippet" required />
-				<label for="body">Blog body:</label>
-				<textarea id="body" required name="body"></textarea>
-				<button>Submit</button>
+		<div class="create-blog content row justify-content-center">
+			<form action="/blogs" method="POST" class="col-7">
+				<h1 class="col-10 mx-auto mb-4">Create Your Blog</h1>
+				<div class="mb-3 col-10 mx-auto">
+					<label for="title" class="form-label">Blog title:</label>
+					<input type="text" class="form-control" id="title" name="title" required />
+				</div>
+				<div class="mb-3 col-10 mx-auto">
+					<label for="snippet" class="form-label">Blog snippet:</label>
+					<input type="text" id="snippet" class="form-control" name="snippet" required />
+				</div>
+				<div class="mb-3 col-10 mx-auto">
+					<label for="body" class="form-label">Blog body:</label>
+					<textarea id="body" class="form-control" required name="body"></textarea>
+				</div>
+				<div class="col-10 mx-auto">
+					<button class="btn btn-lg btn-block btn-dark">Submit</button>
+				</div>
 			</form>
 		</div>
 		<%- include('../partials/footer.ejs') %>
+		<script>
+			document.querySelector('.navbar').style.backgroundColor = 'black';
+			document.querySelector('form').style.marginTop = '10rem';
+			document.querySelector('form').style.marginBottom = '4.5rem';
+		</script>
 	</body>
 </html>

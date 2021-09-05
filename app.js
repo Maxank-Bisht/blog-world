@@ -42,7 +42,9 @@ mongoose
 //routes
 app.get('*', checkUser);
 app.get('/', (req, res) => res.redirect('/blogs'));
-app.get('/about', (req, res) => res.render('about', { title: 'About' }));
+app.get('/about', (req, res) =>
+	res.render('about', { title: 'About Us', heading: 'About Us', img_url: '/assets/img/about-bg.jpg' })
+);
 
 //blogs
 app.use('/blogs', blogRoutes);
@@ -50,5 +52,9 @@ app.use(authRoutes);
 
 //404 page
 app.use((req, res) => {
-	res.status(404).render('404', { title: 'Error -Page not Found!' });
+	res.status(404).render('404', {
+		title: 'Error - Page not Found!',
+		heading: 'Page Not Found!',
+		img_url: '/assets/img/post-sample-image.jpg',
+	});
 });

@@ -1,15 +1,21 @@
 <html lang="en">
 	<%- include('../partials/head.ejs') %>
 	<body>
-		<%- include('../partials/nav.ejs') %>
+		<%- include('../partials/nav.ejs') %> <%- include('../partials/header.ejs') %>
 
-		<div class="details content">
-			<h2><%= blog.title %></h2>
-			<div class="content">
-				<p><%= blog.body %></p>
+		<article class="mb-4">
+			<div class="container px-4 px-lg-5" style="position: relative">
+				<a class="delete" data-doc="<%= blog._id %> "> <img src="/trashcan.svg" alt="trashcan_icon" /></a>
+				<div class="row gx-4 gx-lg-5 justify-content-center">
+					<div class="col-md-10 col-lg-8 col-xl-7">
+						<h2 class="section-heading"><%= blog.snippet %></h2>
+						<p><%= blog.body %></p>
+						<% var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }; %>
+						<p>Created on <%= blog.createdAt.toLocaleDateString('en-US', options)%>.</p>
+					</div>
+				</div>
 			</div>
-			<a class="delete" data-doc="<%= blog._id %> "> <img src="/trashcan.svg" alt="trashcan_icon" /></a>
-		</div>
+		</article>
 
 		<%- include('../partials/footer.ejs') %>
 

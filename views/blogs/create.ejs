@@ -6,30 +6,59 @@
 		<%- include('../partials/nav.ejs') %>
 
 		<div class="create-blog content row justify-content-center">
-			<form action="/blogs" method="POST" class="col-7">
+			<form action="/blogs" method="POST" class="col-7" style="background-color: #fff">
 				<h1 class="col-10 mx-auto mb-4">Create Your Blog</h1>
-				<div class="mb-3 col-10 mx-auto">
+				<div class="mb-3 col-10 mx-auto form-floating">
+					<input
+						type="text"
+						class="form-control showBottom"
+						id="title"
+						name="title"
+						required
+						placeholder="title"
+					/>
 					<label for="title" class="form-label">Blog title:</label>
-					<input type="text" class="form-control" id="title" name="title" required />
 				</div>
-				<div class="mb-3 col-10 mx-auto">
+				<div class="mb-3 col-10 mx-auto form-floating">
+					<input
+						type="text"
+						id="snippet"
+						class="form-control showBottom"
+						name="snippet"
+						required
+						placeholder="snippet"
+					/>
 					<label for="snippet" class="form-label">Blog snippet:</label>
-					<input type="text" id="snippet" class="form-control" name="snippet" required />
 				</div>
-				<div class="mb-3 col-10 mx-auto">
+				<div class="mb-3 col-10 mx-auto form-floating">
+					<textarea
+						id="body"
+						class="form-control"
+						required
+						name="body"
+						placeholder="body"
+						style="height: 15rem"
+					></textarea>
 					<label for="body" class="form-label">Blog body:</label>
-					<textarea id="body" class="form-control" required name="body"></textarea>
 				</div>
-				<div class="col-10 mx-auto">
-					<button class="btn btn-lg btn-block btn-dark">Submit</button>
+				<div class="d-grid gap-2 col-10 mx-auto pt-3">
+					<button class="btn btn-block btn-lg btn-outline-dark">Post Blog</button>
 				</div>
 			</form>
 		</div>
 		<%- include('../partials/footer.ejs') %>
 		<script>
-			document.querySelector('.navbar').style.backgroundColor = 'black';
+			document.querySelector('.navbar').style.backgroundColor = '#00000080';
+			document.querySelector('body').style.backgroundImage = `url('/assets/img/write.jpg')`;
+			document.querySelector('body').style.backgroundSize = 'cover';
+
 			document.querySelector('form').style.marginTop = '10rem';
 			document.querySelector('form').style.marginBottom = '4.5rem';
+
+			const items = document.querySelectorAll('.color-white');
+			items.forEach((item) => {
+				item.style.color = '#fff';
+			});
 		</script>
 	</body>
 </html>

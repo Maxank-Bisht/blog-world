@@ -41,4 +41,24 @@ const checkUser = (req, res, next) => {
 	}
 };
 
-module.exports = { requireAuth, checkUser };
+//get current User details
+const getCurrentUser = async (req, res) => {
+	const token = req.cookies.jwt;
+	if (token) {
+		const result = jwt.verify(token, jwt_secret, async (err, decodedToken) => {
+			if (err) {
+				conole.log(err.message);
+				return null;
+			} else {
+				const user = await User.findById(decodedToken.id);
+				return user;
+			}
+		});
+		return result;
+	} else {
+		console.log('No Token Found');
+		return null;
+	}
+};
+
+module.exports = { requireAuth, checkUser, getCurrentUser };

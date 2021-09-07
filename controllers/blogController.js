@@ -1,4 +1,5 @@
 const Blog = require('../models/blogs');
+const { getCurrentUser } = require('../middleware/authMiddleware');
 
 const blog_index = (req, res) => {
 	Blog.find()
@@ -39,10 +40,26 @@ const blog_create_get = (req, res) => {
 };
 
 const blog_create_post = (req, res) => {
-	const blog = new Blog(req.body);
-	blog.save()
-		.then((result) => res.redirect('/blogs'))
-		.catch((err) => console.log(err));
+	getCurrentUser(req, res)
+		.then((currentUser) => {
+			if (currentUser === null) {
+				res.redirect('/login');
+			} else {
+				let blog = new Blog(req.body);
+				blog.userId = currentUser._id;
+				blog.userName = currentUser.username;
+				blog.save()
+					.then((result) => res.redirect('/blogs'))
+					.catch((err) => {
+						console.log(err);
+						return;
+					});
+			}
+		})
+		.catch((err) => {
+			console.log(err);
+			return;
+		});
 };
 
 const blog_delete = (req, res) => {

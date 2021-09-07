@@ -15,7 +15,7 @@
 						</a>
 						<p class="post-meta">
 							Posted by
-							<a href="#">Start Bootstrap</a>
+							<a class="text-dark"><%= blog.userName %> </a>
 							on <% var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }; %>
 							<%= blog.createdAt.toLocaleDateString('en-US', options)%>
 						</p>

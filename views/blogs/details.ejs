@@ -5,13 +5,20 @@
 
 		<article class="mb-4">
 			<div class="container px-4 px-lg-5" style="position: relative">
-				<a class="delete" data-doc="<%= blog._id %> "> <img src="/trashcan.svg" alt="trashcan_icon" /></a>
+				<% if (blog.userName === user.username) { %>
+				<a class="delete" data-doc="<%= blog._id %> ">
+					<i class="bi bi-trash btn btn-outline-danger rounded-circle p-3" style="font-size: 2rem"></i
+				></a>
+				<% } %>
 				<div class="row gx-4 gx-lg-5 justify-content-center">
 					<div class="col-md-10 col-lg-8 col-xl-7">
 						<h2 class="section-heading"><%= blog.snippet %></h2>
 						<p><%= blog.body %></p>
 						<% var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }; %>
-						<p>Created on <%= blog.createdAt.toLocaleDateString('en-US', options)%>.</p>
+						<p>
+							Created by <em><%= blog.userName %> </em> on <%= blog.createdAt.toLocaleDateString('en-US',
+							options)%>.
+						</p>
 					</div>
 				</div>
 			</div>

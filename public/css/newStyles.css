@@ -1,5 +1,5 @@
 body {
-	font-size: 1.25rem;
+	font-size: 1.1rem;
 }
 
 hr {
@@ -21,20 +21,6 @@ blockquote {
 
 .btn {
 	letter-spacing: 0.0625em;
-}
-
-.form-floating input,
-.form-floating textarea {
-	border-left: 0;
-	border-right: 0;
-	border-top: 0;
-}
-.form-floating input:focus,
-.form-floating textarea:focus {
-	box-shadow: none;
-}
-.form-floating label {
-	color: #6c757d;
 }
 
 #mainNav {
@@ -119,8 +105,12 @@ blockquote {
 	}
 }
 
+a {
+	text-decoration: none;
+}
 footer {
-	padding-top: 3rem;
+	margin-top: 3rem;
+	padding-top: 1rem;
 	padding-bottom: 3rem;
 }
 
@@ -277,6 +267,7 @@ form {
 	border: 1px solid rgb(80, 80, 80);
 	border-radius: 1rem;
 	padding: 2rem;
+	box-shadow: -9px 8px 17px #00000066;
 }
 form h1 {
 	font-weight: 800;
@@ -288,18 +279,46 @@ form h1 {
 	cursor: default;
 	font-weight: 400 !important;
 }
-.username:hover {
-	color: #fff !important;
-}
 .delete {
 	position: absolute;
 	right: 0;
 	top: 70px;
 	cursor: pointer;
 }
-.delete img {
-	width: 30px;
-}
 textarea {
 	height: 100px;
+}
+.logo {
+	height: 3rem;
+	margin: 0 3px 0;
+}
+.error {
+	font-size: 15px;
+}
+
+@media only screen and (max-width: 990px) {
+	.navbar-brand,
+	.nav-link,
+	.navbar-toggler {
+		color: #fff !important;
+	}
+	.navbar-toggler {
+		border-color: #fff !important;
+	}
+}
+.bi-trash {
+	color: red;
+}
+.delete:hover {
+	color: #fff;
+}
+
+.showBottom {
+	border-radius: 0;
+	border: none;
+	border-bottom: 2px solid rgba(0, 0, 0, 0.507);
+}
+.showBottom:focus {
+	outline: none;
+	box-shadow: none;
 }

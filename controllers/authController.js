@@ -6,8 +6,7 @@ const jwt_secret = process.env.JWT_SECRET;
 
 //error handler
 const handleErrors = (err) => {
-	let errors = { email: '', password: '' };
-
+	let errors = { username: '', email: '', password: '' };
 	//incorrect email
 	if (err.message === 'Incorrect Email') {
 		errors.email = 'This email is not register.';
@@ -16,7 +15,9 @@ const handleErrors = (err) => {
 	if (err.message === 'Incorrect Password') {
 		errors.password = 'The password is incorrect';
 	}
-
+	if (err.message === 'user exist') {
+		errors.username = 'Username exist.. try something else';
+	}
 	if (err.code === 11000) {
 		//duplicate email
 		errors.email = 'This email is already registered';
@@ -47,13 +48,17 @@ module.exports.login_get = (req, res) => {
 	res.render('login', { title: 'Login' });
 };
 module.exports.signup_post = async (req, res) => {
-	const { email, password } = req.body;
+	const { username, email, password } = req.body;
 	try {
-		const user = await User.create({ email, password });
-		console.log(user);
-		const token = createToken(user._id);
-		res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
-		res.status(201).json({ user: user._id });
+		const usernameExist = await User.findOne({ username: username });
+		if (usernameExist) {
+			throw Error('user exist');
+		} else {
+			const user = await User.create({ username, email, password });
+			const token = createToken(user._id);
+			res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
+			res.status(201).json({ user: user._id });
+		}
 	} catch (error) {
 		const errors = handleErrors(error);
 		res.status(400).json({ errors });

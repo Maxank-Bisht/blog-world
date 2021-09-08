@@ -5,7 +5,7 @@
 		<%- include('partials/nav'); -%>
 		<div class="row justify-content-center">
 			<form class="col-4" style="background-color: #fff">
-				<h1 class="col-10 mx-auto mb-4 text-center">SIGN UP</h1>
+				<h1 id="after" class="col-10 mx-auto mb-4 text-center">SIGN UP</h1>
 				<div class="d-flex align-items-center justify-content-center mb-3">
 					<i class="fas fa-user me-3 fa-2x"></i>
 					<div class="my-auto col-8 form-floating">
@@ -73,6 +73,9 @@
 				const email = form.email.value;
 				const password = form.password.value;
 
+				const message = document.createElement('div');
+				message.className = 'alert alert-success text-center mx-3';
+
 				try {
 					const res = await fetch('/signup', {
 						method: 'POST',
@@ -83,6 +86,7 @@
 					if (data.errors) {
 						if (data.errors.username) {
 							usernameError.style.display = 'block';
+							usernameError.classList.add();
 							usernameError.textContent = data.errors.username;
 						} else {
 							usernameError.style.display = 'none';
@@ -99,14 +103,28 @@
 						} else {
 							passwordError.style.display = 'none';
 						}
+						removeError();
 					}
-					if (data.user) {
-						location.assign('/');
+					if (data.userId) {
+						message.textContent = 'An email has been sent to you account.';
+						const element = await message;
+						document.querySelector('#after').insertAdjacentElement('afterend', element);
+						console.log(message);
 					}
 				} catch (err) {
 					console.log(err);
 				}
 			});
+			function removeError() {
+				const errors = document.querySelectorAll('.alert');
+				errors.forEach((err) => {
+					if (err.style.display === 'block') {
+						setTimeout(() => {
+							err.style.display = 'none';
+						}, 2000);
+					}
+				});
+			}
 		</script>
 
 		<%- include('partials/footer'); -%>

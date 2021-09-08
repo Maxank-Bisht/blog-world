@@ -61,4 +61,31 @@ const getCurrentUser = async (req, res) => {
 	}
 };
 
-module.exports = { requireAuth, checkUser, getCurrentUser };
+// verifying new users before signing-up
+const confirmUser = async (req, res, next) => {
+	const token = req.params.token;
+	try {
+		jwt.verify(token, jwt_secret, async (err, decodedToken) => {
+			if (err) {
+				console.log(err);
+				if (!user.verify) {
+					await User.deleteOne({ verify: false });
+				}
+				res.redirect('/signup');
+			} else {
+				console.log(decodedToken);
+				await User.findByIdAndUpdate(decodedToken.id, {
+					verify: true,
+				});
+				next();
+			}
+		});
+	} catch (err) {
+		console.log(err);
+		if (!user.verify) {
+			await User.deleteOne({ verify: false });
+		}
+		res.redirect('/signup');
+	}
+};
+module.exports = { requireAuth, checkUser, getCurrentUser, confirmUser };

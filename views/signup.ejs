@@ -1,57 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
 	<%- include('./partials/head.ejs') %>
-
 	<body>
 		<%- include('partials/nav'); -%>
-
-		<form>
-			<h2>Sign Up</h2>
-			<label for="email">Email</label>
-			<input type="text" name="email" required />
-			<div class="email error"></div>
-			<label for="password">Password</label>
-			<input type="password" name="password" required />
-			<div class="password error"></div>
-			<button>Sign up</button>
-		</form>
+		<div class="row justify-content-center">
+			<form class="col-4" style="background-color: #fff">
+				<h1 id="after" class="col-10 mx-auto mb-4 text-center">SIGN UP</h1>
+				<div class="d-flex align-items-center justify-content-center mb-3">
+					<i class="fas fa-user me-3 fa-2x"></i>
+					<div class="my-auto col-8 form-floating">
+						<input
+							type="text"
+							name="username"
+							required
+							class="form-control showBottom"
+							placeholder="Username"
+						/>
+						<label for="username" class="form-label">Username</label>
+						<div class="name error mt-2 alert alert-danger" role="alert"></div>
+					</div>
+				</div>
+				<div class="d-flex align-items-center justify-content-center mb-3">
+					<i class="fas fa-envelope me-3 fa-2x"></i>
+					<div class="my-auto col-8 form-floating">
+						<input type="text" name="email" required class="form-control showBottom" placeholder="email" />
+						<label for="email" class="form-label">Email</label>
+						<div class="email error mt-2 alert alert-danger" role="alert"></div>
+					</div>
+				</div>
+				<div class="d-flex align-items-center justify-content-center mb-3">
+					<i class="fas fa-key me-3 fa-2x"></i>
+					<div class="my-auto col-8 form-floating">
+						<input
+							type="password"
+							name="password"
+							required
+							class="form-control showBottom"
+							placeholder="password"
+						/>
+						<label for="password" class="form-label">Password</label>
+						<div class="password error mt-2 alert alert-danger" role="alert"></div>
+					</div>
+				</div>
+				<div class="d-grid gap-2 col-10 mx-auto pt-3">
+					<button class="btn btn-block btn-lg btn-outline-dark">Sign up</button>
+				</div>
+			</form>
+		</div>
 
 		<script>
+			document.querySelector('body').style.backgroundImage = `url('/assets/img/cover.jpg')`;
+			document.querySelector('body').style.backgroundSize = 'cover';
+			document.querySelector('.navbar').style.backgroundColor = '#000';
+
+			document.querySelector('form').style.marginTop = '8rem';
+			document.querySelector('form').style.marginBottom = '3rem';
+
 			const form = document.querySelector('form');
 			const emailError = document.querySelector('.email.error');
 			const passwordError = document.querySelector('.password.error');
+			const usernameError = document.querySelector('.name.error');
+
+			//hide alerts
+			usernameError.style.display = 'none';
+			emailError.style.display = 'none';
+			passwordError.style.display = 'none';
 
 			form.addEventListener('submit', async (e) => {
 				e.preventDefault();
 
-				//reset error
-				emailError.textContent = '';
-				passwordError.textContent = '';
-
+				const username = form.username.value;
 				const email = form.email.value;
 				const password = form.password.value;
+
+				const message = document.createElement('div');
+				message.className = 'alert alert-success text-center mx-3';
 
 				try {
 					const res = await fetch('/signup', {
 						method: 'POST',
-						body: JSON.stringify({ email, password }),
+						body: JSON.stringify({ username, email, password }),
 						headers: { 'Content-Type': 'application/json' },
 					});
 					const data = await res.json();
-					console.log(data);
 					if (data.errors) {
-						emailError.textContent = data.errors.email;
-						passwordError.textContent = data.errors.password;
+						if (data.errors.username) {
+							usernameError.style.display = 'block';
+							usernameError.classList.add();
+							usernameError.textContent = data.errors.username;
+						} else {
+							usernameError.style.display = 'none';
+						}
+						if (data.errors.email) {
+							emailError.style.display = 'block';
+							emailError.textContent = data.errors.email;
+						} else {
+							emailError.style.display = 'none';
+						}
+						if (data.errors.password) {
+							passwordError.style.display = 'block';
+							passwordError.textContent = data.errors.password;
+						} else {
+							passwordError.style.display = 'none';
+						}
+						removeError();
 					}
-					if (data.user) {
-						location.assign('/');
+					if (data.userId) {
+						message.textContent = 'An email has been sent to you account.';
+						const element = await message;
+						document.querySelector('#after').insertAdjacentElement('afterend', element);
+						console.log(message);
 					}
 				} catch (err) {
 					console.log(err);
 				}
 			});
+			function removeError() {
+				const errors = document.querySelectorAll('.alert');
+				errors.forEach((err) => {
+					if (err.style.display === 'block') {
+						setTimeout(() => {
+							err.style.display = 'none';
+						}, 2000);
+					}
+				});
+			}
 		</script>
 
 		<%- include('partials/footer'); -%>
+		<script>
+			const items = document.querySelectorAll('.color-white');
+			items.forEach((item) => {
+				item.style.color = '#fff';
+			});
+		</script>
 	</body>
 </html>

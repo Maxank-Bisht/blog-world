@@ -2,21 +2,33 @@
 <html lang="en">
 	<%- include('../partials/head.ejs') %>
 	<body>
-		<%- include('../partials/nav.ejs') %>
+		<%- include('../partials/nav.ejs') %> <%- include('../partials/header.ejs') %>
 
-		<div class="blogs content">
-			<h2>All Blogs</h2>
-			<% if(blogs.length>0){ %> <% blogs.forEach(blog=>{ %>
-			<div>
-				<a class="single" href="/blogs/<%= blog._id %> ">
-					<h3 class="title"><%= blog.title %></h3>
-				</a>
-				<p class="snippet"><%= blog.snippet %></p>
+		<div class="container px-4 px-lg-5">
+			<div class="row gx-4 gx-lg-5 justify-content-center">
+				<div class="col-md-10 col-lg-8 col-xl-7">
+					<% if(blogs.length>0){ %> <% blogs.forEach(blog=>{ %>
+					<div class="post-preview">
+						<a href="/blogs/<%= blog._id %>">
+							<h2 class="post-title"><%= blog.title %></h2>
+							<h3 class="post-snippet"><%= blog.snippet %></h3>
+						</a>
+						<p class="post-meta">
+							Posted by
+							<a class="text-dark"><%= blog.userName %> </a>
+							on <% var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }; %>
+							<%= blog.createdAt.toLocaleDateString('en-US', options)%>
+						</p>
+						<hr class="my-4" />
+						<!-- Divider-->
+					</div>
+					<% }) } else{ %>
+					<p>There are no blogs to show....</p>
+					<% } %>
+				</div>
 			</div>
-			<% }) } else{ %>
-			<p>There are no blogs to show....</p>
-			<% } %>
 		</div>
+
 		<%- include('../partials/footer.ejs') %>
 	</body>
 </html>

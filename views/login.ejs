@@ -4,22 +4,57 @@
 
 	<body>
 		<%- include('partials/nav'); -%>
-
-		<form>
-			<h2>Log In</h2>
-			<label for="email">Email</label>
-			<input type="text" name="email" required />
-			<div class="email error"></div>
-			<label for="password">Password</label>
-			<input type="password" name="password" required />
-			<div class="password error"></div>
-			<button>Log In</button>
-		</form>
+		<div class="row justify-content-center">
+			<form class="col-4" style="background-color: #fff">
+				<h1 class="col-10 mx-auto mb-4 text-center">LOG IN</h1>
+				<div class="d-flex align-items-center justify-content-center mb-3">
+					<i class="fas fa-envelope me-3 fa-2x"></i>
+					<div class="my-auto col-8 form-floating">
+						<input
+							type="text"
+							name="email"
+							required
+							class="form-control showBottom"
+							placeholder="name@example.com"
+						/>
+						<label for="email">Email address</label>
+						<div class="email error mt-2 alert alert-danger"></div>
+					</div>
+				</div>
+				<div class="d-flex align-items-center justify-content-center mb-3">
+					<i class="fas fa-key me-3 fa-2x"></i>
+					<div class="my-auto col-8 form-floating">
+						<input
+							type="password"
+							name="password"
+							required
+							class="form-control showBottom"
+							placeholder="password"
+						/>
+						<label for="password" class="form-label">Password</label>
+						<div class="password error mt-2 alert alert-danger"></div>
+					</div>
+				</div>
+				<div class="d-grid gap-2 col-10 mx-auto pt-3">
+					<button class="btn btn-block btn-lg btn-outline-dark">Log in</button>
+				</div>
+			</form>
+		</div>
 
 		<script>
+			document.querySelector('.navbar').style.backgroundColor = '#000';
+			document.querySelector('body').style.backgroundImage = `url('/assets/img/cover.jpg')`;
+			document.querySelector('body').style.backgroundSize = 'cover';
+
+			document.querySelector('form').style.marginTop = '10rem';
+			document.querySelector('form').style.marginBottom = '4.5rem';
+
 			const form = document.querySelector('form');
 			const emailError = document.querySelector('.email.error');
 			const passwordError = document.querySelector('.password.error');
+
+			emailError.style.display = 'none';
+			passwordError.style.display = 'none';
 
 			form.addEventListener('submit', async (e) => {
 				e.preventDefault();
@@ -40,8 +75,19 @@
 					const data = await res.json();
 					console.log(data);
 					if (data.errors) {
-						emailError.textContent = data.errors.email;
-						passwordError.textContent = data.errors.password;
+						if (data.errors.email) {
+							emailError.style.display = 'block';
+							emailError.textContent = data.errors.email;
+						} else {
+							emailError.style.display = 'none';
+						}
+						if (data.errors.password) {
+							passwordError.style.display = 'block';
+							passwordError.textContent = data.errors.password;
+						} else {
+							passwordError.style.display = 'none';
+						}
+						removeError();
 					}
 					if (data.user) {
 						location.assign('/');
@@ -52,5 +98,22 @@
 			});
 		</script>
 		<%- include('./partials/footer.ejs') %>
+		<script>
+			const items = document.querySelectorAll('.color-white');
+			items.forEach((item) => {
+				item.style.color = '#fff';
+			});
+			document.querySelector('footer').style.marginTop = '4.5rem';
+			function removeError() {
+				const errors = document.querySelectorAll('.alert');
+				errors.forEach((err) => {
+					if (err.style.display === 'block') {
+						setTimeout(() => {
+							err.style.display = 'none';
+						}, 2000);
+					}
+				});
+			}
+		</script>
 	</body>
 </html>

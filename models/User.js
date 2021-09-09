@@ -66,9 +66,9 @@ userSchema.statics.verifyEmail = async (req, token, email) => {
 		const mail = {
 			from: process.env.MY_EMAIL,
 			to: `${email}`,
-			subject: 'Verify your email for signing up at NodeBlogs',
+			subject: 'Verify your email for signing up at Blog World',
 			html: `
-					<h2>Confirmation Email from NodeBlogs</h2>
+					<h2>Confirmation Email from Blog World</h2>
 					<p>You are receiving this email because your email address is used to sign-up at <strong>NodeBlogs</strong></p>
 					<p>Please confirm verification by clicking on the link: <a href="${url}">Verify</a></p>
 					<p>If you didn't tried to signup then simply ignore this mail.</p>`,

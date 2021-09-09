@@ -42,9 +42,9 @@ mongoose
 //routes
 app.get('*', checkUser);
 app.get('/', (req, res) => res.redirect('/blogs'));
-app.get('/about', (req, res) =>
-	res.render('about', { title: 'About Us', heading: 'About Us', img_url: '/assets/img/about-bg.jpg' })
-);
+app.get('/about', (req, res) => {
+	res.render('about', { title: 'About Us', heading: 'About Us', img_url: '/assets/img/about-bg.jpg' });
+});
 
 //blogs
 app.use('/blogs', blogRoutes);

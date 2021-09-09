@@ -2,6 +2,7 @@ const Blog = require('../models/blogs');
 const { getCurrentUser } = require('../middleware/authMiddleware');
 
 const blog_index = (req, res) => {
+	console.log(req.url);
 	Blog.find()
 		.sort({ createdAt: -1 })
 		.then((result) => {

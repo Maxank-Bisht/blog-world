@@ -51,8 +51,10 @@ userSchema.statics.login = async function (email, password) {
 	throw Error('Incorrect Email');
 };
 
-userSchema.statics.verifyEmail = async (token, email) => {
-	const url = `http://localhost:3000/confirmation/${token}`;
+userSchema.statics.verifyEmail = async (req, token, email) => {
+	const host = req.get('host');
+	console.log(req.get('host'));
+	const url = `http://${host}/confirmation/${token}`;
 	const transporter = nodemailer.createTransport({
 		service: 'Gmail',
 		auth: {
@@ -61,25 +63,18 @@ userSchema.statics.verifyEmail = async (token, email) => {
 		},
 	});
 	try {
-		transporter.sendMail(
-			{
-				from: process.env.MY_EMAIL,
-				to: `${email}`,
-				subject: 'Verify your email for signing up at NodeBlogs',
-				html: `
+		const mail = {
+			from: process.env.MY_EMAIL,
+			to: `${email}`,
+			subject: 'Verify your email for signing up at NodeBlogs',
+			html: `
 					<h2>Confirmation Email from NodeBlogs</h2>
 					<p>You are receiving this email because your email address is used to sign-up at <strong>NodeBlogs</strong></p>
 					<p>Please confirm verification by clicking on the link: <a href="${url}">Verify</a></p>
 					<p>If you didn't tried to signup then simply ignore this mail.</p>`,
-			},
-			(err, response) => {
-				if (err) {
-					console.log(err);
-				} else {
-					console.log('mail sent');
-				}
-			}
-		);
+		};
+		const info = await transporter.sendMail(mail);
+		return info.messageId;
 	} catch (err) {
 		console.log('cannot send email');
 		console.log(err);

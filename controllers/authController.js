@@ -63,13 +63,18 @@ module.exports.signup_post = async (req, res) => {
 		} else {
 			const user = await User.create({ username, email, password, verify: false });
 			const token = createToken(user._id);
-			const info = await User.verifyEmail(token, email);
-			console.log(info);
-			if (info) {
-				res.status(201).json({ userId: user._id });
-			} else {
-				throw new Error('Email not sent');
-			}
+			User.verifyEmail(req, token, email)
+				.then((info) => {
+					if (info) {
+						res.status(201).json({ userId: user._id });
+					} else {
+						throw new Error('Email not sent');
+					}
+				})
+				.catch((err) => {
+					console.log(err);
+					return;
+				});
 		}
 	} catch (error) {
 		console.log(error.message);

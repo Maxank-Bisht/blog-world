@@ -49,9 +49,35 @@ const createToken = (id) => {
 };
 
 module.exports.signup_get = (req, res) => {
+	if (req.cookies.jwt) {
+		const token = req.cookies.jwt;
+		if (token) {
+			jwt.verify(token, jwt_secret, (err, decodedToken) => {
+				if (err) {
+					conole.log(err.message);
+					res.redirect('/signup');
+				} else {
+					res.redirect('/');
+				}
+			});
+		}
+	}
 	res.render('signup', { title: 'Sign Up' });
 };
 module.exports.login_get = (req, res) => {
+	if (req.cookies.jwt) {
+		const token = req.cookies.jwt;
+		if (token) {
+			jwt.verify(token, jwt_secret, (err, decodedToken) => {
+				if (err) {
+					conole.log(err.message);
+					res.redirect('/login');
+				} else {
+					res.redirect('/');
+				}
+			});
+		}
+	}
 	res.render('login', { title: 'Login' });
 };
 module.exports.signup_post = async (req, res) => {

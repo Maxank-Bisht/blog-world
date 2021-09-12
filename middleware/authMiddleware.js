@@ -77,7 +77,6 @@ const confirmUser = async (req, res, next) => {
 				await User.findByIdAndUpdate(decodedToken.id, {
 					verify: true,
 				});
-				res.cookie('jwt', token, { httpOnly: true, maxAge: 1 * 24 * 60 * 60 * 1000 });
 				next();
 			}
 		});

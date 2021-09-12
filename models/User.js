@@ -58,8 +58,12 @@ userSchema.statics.verifyEmail = async (req, token, email) => {
 	const transporter = nodemailer.createTransport({
 		service: 'Gmail',
 		auth: {
+			type: 'OAuth2',
 			user: process.env.MY_EMAIL,
 			pass: process.env.MY_PASSWORD,
+			clientId: process.env.OAUTH_CLIENTID,
+			clientSecret: process.env.OAUTH_CLIENT_SECRET,
+			refreshToken: process.env.OAUTH_REFRESH_TOKEN,
 		},
 	});
 	try {
@@ -69,7 +73,7 @@ userSchema.statics.verifyEmail = async (req, token, email) => {
 			subject: 'Verify your email for signing up at Blog World',
 			html: `
 					<h2>Confirmation Email from Blog World</h2>
-					<p>You are receiving this email because your email address is used to sign-up at <strong>NodeBlogs</strong></p>
+					<p>You are receiving this email because your email address is used to sign-up at <strong>Blog World</strong></p>
 					<p>Please confirm verification by clicking on the link: <a href="${url}">Verify</a></p>
 					<p>If you didn't tried to signup then simply ignore this mail.</p>`,
 		};
